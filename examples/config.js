@@ -83,7 +83,7 @@ module.exports = {
   */
   mobizon: {
     driver: 'mobizon',
-    key: Env.get('MOBIZON_APIKEY'),
+    apiKey: Env.get('MOBIZON_APIKEY'),
     // from: Env.get('MOBIZON_FROM')
   },
 }
