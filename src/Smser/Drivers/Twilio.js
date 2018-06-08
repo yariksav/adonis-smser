@@ -30,6 +30,9 @@ class Twilio extends BaseDriver {
    */
   setConfig (config) {
     super.setConfig(config)
+    if (!config || !config.accountSid || !config.authToken) {
+      throw Error ('Twilio driver require config with "accountSid" and "authToken" params')
+    }
     const Twilio = require('twilio')
     this.transporter  = new Twilio(config.accountSid, config.authToken)
   }
@@ -58,7 +61,8 @@ class Twilio extends BaseDriver {
 
     let res = await this.transporter.messages.create(payload)
     return {
-      messageId: res.sid,
+      message,
+      id: res.sid,
       date: res.dateCreated,
       status: res.status
     }

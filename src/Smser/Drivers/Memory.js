@@ -36,7 +36,7 @@ class MemoryDriver extends BaseDriver {
     super.send(message)
     return {
       message: message,
-      messageId: 'test'
+      id: Math.random().toString(36).substring(7)
     }
   }
 }

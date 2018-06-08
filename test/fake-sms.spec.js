@@ -23,7 +23,6 @@ test.group('FakeSms', () => {
     const response = await sms.send('Hello everyone', (message) => {
       message.to(phone)
     })
-    console.log(response)
     // assert.equal(response.message.from.address, 'foo@bar.com')
     assert.equal(response.message.to, phone)
     assert.equal(response.message.text, 'Hello everyone')

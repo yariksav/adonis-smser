@@ -30,7 +30,7 @@ test.group('MemoryDriver driver', (group) => {
       text: 'Hello world'
     })
 
-    assert.isDefined(message.messageId)
+    assert.isDefined(message.id)
     assert.equal(message.message.from, process.env.TEST_FROM)
     assert.equal(message.message.to, process.env.TEST_PHONE)
     assert.equal(message.message.text, 'Hello world')

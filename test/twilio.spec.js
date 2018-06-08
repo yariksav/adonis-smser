@@ -74,7 +74,6 @@ test.group('Twilio', () => {
       from: '+15005550006',
       text: 'Hello world'
     })
-    console.log(response)
-    assert.isDefined(response.messageId)
+    assert.isDefined(response.id)
   }).timeout(0)
 })

@@ -10,9 +10,10 @@
 */
 
 module.exports = {
-  twilio: require('./Twilio'),
+  memory: require('./Memory'),
+  mobizon: require('./Mobizon'),
+  plivo: require('./Plivo'),
   smsapi: require('./SmsApi'),
   smsfly: require('./SmsFly'),
-  mobizon: require('./Mobizon'),
-  memory: require('./Memory')
+  twilio: require('./Twilio')
 }

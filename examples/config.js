@@ -26,9 +26,23 @@ module.exports = {
     driver: 'twilio',
     accountSid: Env.get('TWILIO_SID'),
     authToken: Env.get('TWILIO_TOKEN'),
-    // form: Env.get('TWILIO_FROM')
+    // from: Env.get('TWILIO_FROM')
   },
 
+  /*
+  |--------------------------------------------------------------------------
+  | Plivo
+  |--------------------------------------------------------------------------
+  |
+  | Here we define configuration for sending smses via plivo.com.
+  |
+  */
+  plivo: {
+    driver: 'plivo',
+    authId: Env.get('PLIVO_AUTHID'),
+    authToken: Env.get('PLIVO_AUTHTOKEN'),
+    // from: Env.get('TPLIVO_FROM')
+  },
   /*
   |--------------------------------------------------------------------------
   | Sms Api
@@ -41,7 +55,7 @@ module.exports = {
     driver: 'smsapi',
     username: Env.get('SMSAPI_USERNAME'),
     password: Env.get('SMSAPI_PASSWORD')
-    // form: Env.get('SMSAPI_FROM')
+    // from: Env.get('SMSAPI_FROM')
   },
 
   /*
@@ -56,7 +70,7 @@ module.exports = {
     driver: 'smsfly',
     username: Env.get('SMSFLY_USERNAME'),
     password: Env.get('SMSFLY_PASSWORD'),
-    // form: Env.get('SMSFLY_FROM')
+    // from: Env.get('SMSFLY_FROM')
   },
 
   /*
@@ -69,7 +83,7 @@ module.exports = {
   */
   mobizon: {
     driver: 'mobizon',
-    key: Env.get('MOBIZON_KEY'),
-    // form: Env.get('MOBIZON_FROM')
+    key: Env.get('MOBIZON_APIKEY'),
+    // from: Env.get('MOBIZON_FROM')
   },
 }

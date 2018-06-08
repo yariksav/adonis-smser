@@ -28,10 +28,7 @@ test.group('SmsFly', () => {
       to: process.env.TEST_PHONE,
       text: 'Hello world'
     })
-
-    // console.log(response)
-    assert.isDefined(response.messageId)
-    // assert.isDefined(response.messageId)
+    assert.isDefined(response.id)
   })
 
   test('send sms through wrong account', async (assert) => {
@@ -66,7 +63,6 @@ test.group('SmsFly', () => {
       to: process.env.TEST_PHONE,
       text: 'Hello world'
     })
-
     assert.equal(res, '<?xml version="1.0" encoding="utf-8"?><request><operation>SENDSMS</operation><message start_time="AUTO" end_time="AUTO" lifetime="4" desc="description"><recipient>'+process.env.TEST_PHONE+'</recipient><body>Hello world</body></message></request>')
   })
 })

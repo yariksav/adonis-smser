@@ -24,6 +24,17 @@ await Sms.send('Test message', (message) => {
 
 The `verify` is the view name stored inside the `resources/views/sms` directory.
 
+## Installation
+
+To use twilio driver:
+```js
+npm install twilio --save
+```
+
+To use plivo driver:
+```js
+npm install plivo --save
+```
 ## Configuration and Environment variables
 
 The configuration file is saved as `config/smser.js`, feel free to tweak it according.

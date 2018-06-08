@@ -29,15 +29,18 @@ class SmsApi extends BaseDriver {
    */
   setConfig (config) {
     super.setConfig(config)
-    const SMSAPI = require('smsapicom')
-    this.transporter  = new SMSAPI()
-    this.transporter.authentication.login(config.username, config.password)
+    if (!config || !config.username || !config.password) {
+      throw Error ('SmsApi driver require config with "username" and "password" params')
+    }
+    const SmsApiCom = require('smsapicom')
+    this.transporter  = new SmsApiCom()
+    if (config.password.length === 32) {
+      this.transporter.authentication.loginHashed(config.username, config.password)
+    } else {
+      this.transporter.authentication.login(config.username, config.password)
+    }
   }
 
-  _generatePayload (object) {
-    return Object.assign({}, {
-    }, object)
-  }
   /**
    * Send a message via message object
    *
@@ -79,7 +82,7 @@ class SmsApi extends BaseDriver {
     }
     return {
       message: message,
-      messageId: res.list[0].id,
+      id: res.list[0].id,
       date: res.list[0].date_sent
     }
   }

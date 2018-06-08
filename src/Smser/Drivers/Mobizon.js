@@ -9,32 +9,16 @@
  * file that was distributed with this source code.
 */
 
-const convert = require('xml-js')
 const Request = require('../../Request')
 const BaseDriver = require('./BaseDriver')
+const got = require('got')
 
 class MobizonDriver extends BaseDriver {
 
   get endpoint () {
-    return `${(this.config.endpoint || 'https://mobizon.ua/bulk-sms/gateway/api')}`
+    return `${(this.config.endpoint || 'https://api.mobizon.com/service')}`
   }
 
-  _generatePayload (message) {
-    let obj = {
-      '_declaration': {
-        '_attributes': {'version':'1.0','encoding':'utf-8'}
-      },
-      'request': {
-        'operation': 'SENDSMS',
-        'message': {
-          '_attributes':{'start_time':'AUTO','end_time':'AUTO','lifetime':'4','desc':'description'},
-          'recipient': message.to,
-          'body': message.text
-        }
-      }
-    }
-    return convert.js2xml(obj, {compact: true})
-  }
   /**
    * Send a message via message object
    *
@@ -47,18 +31,29 @@ class MobizonDriver extends BaseDriver {
    *
    * @throws {Error} If promise rejects
    */
+
+  //https://api.mobizon.com/service/user/getownbalance/?apiKey=916a480b29b2004064e3d41885dde3faf1be0c0b
+
   async send (message) {
     super.send(message)
-    let body = this._generatePayload(message)
-    let res = await new Request().basicAuth(this.config.username + ':' + this.config.password).post(this.endpoint, body)
-    if (res && res.charAt(0) !== '<') {
-      throw new Error(res)
+    if (!this.config || !this.config.apiKey) {
+      throw Error ('Mobizon driver require config with "apiKey" param')
     }
-    let resObj = convert.xml2js(res, {compact: true});
-    // console.log('rere', body, resObj)
+    let from = message.from || this.config.from
+    let url = this.endpoint + '/message/sendsmsmessage?'+
+      'apiKey='+this.config.apiKey+
+      '&recipient='+message.to+
+      (from ? '&from=' + from : '') +
+      '&text='+message.text
+
+    let res = await got.get(url)
+    let data = JSON.parse(res.body)
+    if (data.code > 0) {
+      throw new Error(data.message)
+    }
     return {
-      messageId: resObj.message.state._attributes.campaignID,
-      date: resObj.message.state._attributes.date
+      message,
+      id: data.messageId
     }
   }
 }

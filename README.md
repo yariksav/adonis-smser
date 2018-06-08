@@ -15,7 +15,7 @@ This repo is a AdonisJs provider to send sms using one of the available drivers,
 This repo contains following providers.
 
 1. Consistent API to send smses
-2. Support for multiple drivers include **twilio**,**smsapi.com**,**smsfly.ua**,**mobizon** etc.
+2. Support for multiple drivers include **twilio.com**,**plivo.com**, **smsapi.com**,**smsfly.ua**,**mobizon** etc.
 3. API to add your own drivers
 
 ## Node/OS Target

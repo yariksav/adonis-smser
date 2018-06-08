@@ -11,6 +11,7 @@
 
 require('dotenv').load()
 const test = require('japa')
+const md5 = require('md5')
 const { smsapi: SmsApiDriver } = require('../src/Smser/Drivers')
 
 /*
@@ -54,7 +55,7 @@ test.group('smsapi.com', () => {
       from: 'Test',
       text: 'Hello world'
     })
-    assert.isDefined(response.messageId)
+    assert.isDefined(response.id)
   }).timeout(0)
 
 })

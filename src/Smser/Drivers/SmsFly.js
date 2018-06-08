@@ -48,6 +48,9 @@ class SmsFlyDriver extends BaseDriver {
    * @throws {Error} If promise rejects
    */
   async send (message) {
+    if (!this.config || !this.config.username || !this.config.password) {
+      throw Error ('SmsFly driver require config with "username" and "password" params')
+    }
     super.send(message)
     let body = this._generatePayload(message)
     let res = await new Request().basicAuth(this.config.username + ':' + this.config.password).post(this.endpoint, body)
@@ -57,7 +60,8 @@ class SmsFlyDriver extends BaseDriver {
     let resObj = convert.xml2js(res, {compact: true});
     // console.log('rere', body, resObj)
     return {
-      messageId: resObj.message.state._attributes.campaignID,
+      message,
+      id: resObj.message.state._attributes.campaignID,
       date: resObj.message.state._attributes.date
     }
   }
