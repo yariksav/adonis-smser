@@ -32,8 +32,6 @@ class MobizonDriver extends BaseDriver {
    * @throws {Error} If promise rejects
    */
 
-  //https://api.mobizon.com/service/user/getownbalance/?apiKey=916a480b29b2004064e3d41885dde3faf1be0c0b
-
   async send (message) {
     super.send(message)
     if (!this.config || !this.config.apiKey) {

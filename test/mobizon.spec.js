@@ -45,5 +45,5 @@ test.group('Mobizon', () => {
       console.log(error)
       assert.match(error.message, /API authentication error/)
     }
-  })
+  }).timeout(0)
 })
