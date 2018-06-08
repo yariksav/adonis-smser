@@ -4,9 +4,7 @@ This repo is a AdonisJs provider to send sms using one of the available drivers,
 
 
 [![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
 [![Appveyor][appveyor-image]][appveyor-url]
-[![Coveralls][coveralls-image]][coveralls-url]
 
 <img src="https://cdn4.iconfinder.com/data/icons/chat-icons-3-1/512/smss.png" width="200px" align="right" hspace="30px" vspace="140px">
 

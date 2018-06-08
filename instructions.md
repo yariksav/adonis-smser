@@ -4,7 +4,7 @@ The provider is registered inside `start/app.js` file under `providers` array.
 
 ```js
 const providers = [
-  'adonisjs-smser/providers/SmserProvider'
+  'adonis-smser/providers/SmserProvider'
 ]
 ```
 
@@ -13,7 +13,7 @@ That's all! Now you can use the sms provider as follows.
 ```js
 const Sms = use('Smser')
 
-await Sms.send('sms.verify', '+380501233211')
+await Sms.send('Your verification code is 1234', '+380501233211')
 })
 
 await Sms.send('Test message', (message) => {
