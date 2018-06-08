@@ -4,7 +4,7 @@ The provider is registered inside `start/app.js` file under `providers` array.
 
 ```js
 const providers = [
-  'adonisjs-sms-sender/providers/SmsProvider'
+  'adonisjs-smser/providers/SmserProvider'
 ]
 ```
 

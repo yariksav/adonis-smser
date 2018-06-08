@@ -11,7 +11,7 @@
 
 const { ServiceProvider } = require('@adonisjs/fold')
 
-class SmsProvider extends ServiceProvider {
+class SmserProvider extends ServiceProvider {
   /**
    * Register sms provider under `Adonis/Addons/Smser`
    * namespace
@@ -58,4 +58,4 @@ class SmsProvider extends ServiceProvider {
   }
 }
 
-module.exports = SmsProvider
+module.exports = SmserProvider
