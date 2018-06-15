@@ -21,10 +21,9 @@ const proxyMethods = ['send']
  * @constructor
  */
 class FakeSms {
-  constructor (Config, View) {
+  constructor (Config) {
     this.Config = Config
-    this.View = View
-    this.sender = SmsManager.driver('memory', {}, this.View)
+    this.sender = SmsManager.driver('memory', {})
     this._smses = []
   }
 

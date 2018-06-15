@@ -48,7 +48,7 @@ test.group('SmsFly', () => {
     } catch (error) {
       assert.match(error.message, /Access denied!/)
     }
-  })
+  }).timeout(0)
 
   test('check is xml correct', async (assert) => {
     const config = {

@@ -24,11 +24,10 @@ class SmserProvider extends ServiceProvider {
    */
   _registerSmser () {
     this.app.singleton('Adonis/Addons/Smser', (app) => {
-      const View = app.use('Adonis/Src/View')
       const Config = app.use('Adonis/Src/Config')
 
       const Smser = require('../src/Smser')
-      return new Smser(Config, View)
+      return new Smser(Config)
     })
     this.app.alias('Adonis/Addons/Smser', 'Smser')
   }

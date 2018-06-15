@@ -14,6 +14,9 @@ module.exports = {
   */
   connection: Env.get('SMSER_CONNECTION', 'twilio'),
 
+  activation: {
+    codeSize: 6
+  }
   /*
   |--------------------------------------------------------------------------
   | Twilio

@@ -10,7 +10,7 @@
 */
 
 const BaseDriver = require('./BaseDriver')
-
+const uuidv1 = require('uuid/v1')
 /**
  * Memory driver is used to get the message back as
  * an object over sending it to a real user.
@@ -36,7 +36,7 @@ class MemoryDriver extends BaseDriver {
     super.send(message)
     return {
       message: message,
-      id: Math.random().toString(36).substring(7)
+      id: uuidv1()
     }
   }
 }

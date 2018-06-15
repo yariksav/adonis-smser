@@ -11,7 +11,9 @@
 
 const GE = require('@adonisjs/generic-exceptions')
 const SmsManager = require('./Manager')
+const Avtivator = require('./Activator')
 const proxyMethods = ['send']
+const activatorProxyMethods = ['sendActivation', 'resendActivation', 'verifyActivation']
 
 const proxyHandler = {
   get (target, name) {
@@ -45,13 +47,19 @@ const proxyHandler = {
  * @constructor
  */
 class Smser {
-  constructor (Config, View) {
-    this.Config = Config
-    this.View = View
+  constructor (Config) {
+    this._config = Config
     this._sendersPool = {}
     this._fake = null
+    this._proxyHandler = new Proxy(this, proxyHandler)
+    return this._proxyHandler
+  }
 
-    return new Proxy(this, proxyHandler)
+  get activator () {
+    if (!this._activator) {
+      this._activator = new Avtivator(this._proxyHandler, this._config.get(`smser.activation`))
+    }
+    return this._activator
   }
 
   /**
@@ -65,7 +73,7 @@ class Smser {
    * @return {Object}
    */
   connection (name) {
-    name = name || this.Config.get('smser.connection')
+    name = name || this._config.get('smser.connection')
 
     /**
      * Returns the cache connection if defined
@@ -84,7 +92,7 @@ class Smser {
     /**
      * Get connection config
      */
-    const connectionConfig = this.Config.get(`smser.${name}`)
+    const connectionConfig = this._config.get(`smser.${name}`)
 
     /**
      * Cannot get config for the defined connection
@@ -114,7 +122,7 @@ class Smser {
    * @return {void}
    */
   fake () {
-    this._fake = new (require('./Fake'))(this.Config, this.View)
+    this._fake = new (require('./Fake'))(this._config)
   }
 
   /**
@@ -134,5 +142,12 @@ proxyMethods.forEach((method) => {
     return this.connection()[method](...params)
   }
 })
+
+activatorProxyMethods.forEach((method) => {
+  Smser.prototype[method] = function (...params) {
+    return this.activator[method](...params)
+  }
+})
+
 
 module.exports = Smser

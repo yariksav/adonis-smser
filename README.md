@@ -16,6 +16,8 @@ This repo contains following providers.
 2. Support for multiple drivers include **twilio.com**,**plivo.com**, **smsapi.com**,**smsfly.ua**,**mobizon** etc.
 3. API to add your own drivers
 
+[Read documentation](https://github.com/yariksav/adonis-smser/blob/master/instructions.md)
+
 ## Node/OS Target
 
 This repo/branch is supposed to run fine on all major OS platforms and targets `Node.js >=7.0`
@@ -79,8 +81,8 @@ Now since the `add` method has a bug, it will return `6` instead of `4`. But the
 
 [appveyor-url]: https://ci.appveyor.com/project/yariksav/adonis-smser
 
-[npm-image]: https://img.shields.io/npm/v/yariksav/adonis-smser.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/yariksav/adonis-smser
+[npm-image]: https://img.shields.io/npm/v/adonis-smser.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/adonis-smser
 
 [travis-image]: https://img.shields.io/travis/yariksav/adonis-smser/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/yariksav/adonis-smser

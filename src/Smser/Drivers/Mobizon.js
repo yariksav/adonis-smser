@@ -46,7 +46,7 @@ class MobizonDriver extends BaseDriver {
 
     let res = await got.get(url)
     let data = JSON.parse(res.body)
-    if (data.code > 0) {
+    if (data.code !== 0 || data.code !== 100) {
       throw new Error(data.message)
     }
     return {

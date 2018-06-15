@@ -19,7 +19,7 @@ https://www.twilio.com/docs/iam/test-credentials
 */
 
 test.group('Plivo', () => {
-  test('send sms with error from', async (assert) => {
+  test.skip('send sms with error from', async (assert) => {
     const config = {
       authId: process.env.PLIVO_AUTHID,
       authToken: process.env.PLIVO_AUTHTOKEN
@@ -39,7 +39,7 @@ test.group('Plivo', () => {
     }
   }).timeout(0)
 
-  test('send sms with wrong auth', async (assert) => {
+  test.skip('send sms with wrong auth', async (assert) => {
     const config = {
       authId: '_' + process.env.PLIVO_AUTHID,
       authToken: process.env.PLIVO_AUTHTOKEN

@@ -20,7 +20,7 @@ https://docs.smsapi.com/#libraries
 */
 
 test.group('smsapi.com', () => {
-  test('send sms with error from', async (assert) => {
+  test.skip('send sms with error from', async (assert) => {
     const config = {
       username: process.env.SMSAPI_USERNAME,
       password: process.env.SMSAPI_PASSWORD
