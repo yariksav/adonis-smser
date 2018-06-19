@@ -1,6 +1,6 @@
 {
   "name": "adonis-smser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sms provider for adonis framework and has support for several common sms services to send sms",
   "main": "index.js",
   "directories": {
@@ -55,7 +55,7 @@
     "clone": "^2.1.1",
     "debug": "^3.1.0",
     "get-stream": "^3.0.0",
-    "got": "8.3.0",
+    "got": "^8.3.0",
     "xml-js": "^1.6.4"
   },
   "repository": {

@@ -1,3 +1,21 @@
+
+
+## Installation
+
+```js
+adonis install adonis-smser
+```
+
+If you want use twilio driver:
+```js
+npm install twilio --save
+```
+
+If you want use plivo driver:
+```js
+npm install plivo --save
+```
+
 ## Registering provider
 
 The provider is registered inside `start/app.js` file under `providers` array.
@@ -24,17 +42,6 @@ await Smser.send('Test message', (message) => {
 
 The `verify` is the view name stored inside the `resources/views/sms` directory.
 
-## Installation
-
-To use twilio driver:
-```js
-npm install twilio --save
-```
-
-To use plivo driver:
-```js
-npm install plivo --save
-```
 
 ## Activator module
 
@@ -51,7 +58,8 @@ base config example:
 activation: {
   tryLimit: 2, // limits of verification tries
   resendLimit: 2, // limits of resend sms verification,
-  codeSize: 6 //Size of verification code
+  codeSize: 6, //Size of verification code
+  timeout: 120 // verify timeout in sec
 }
 ```
 

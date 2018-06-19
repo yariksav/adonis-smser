@@ -65,18 +65,20 @@ class SmsApi extends BaseDriver {
       .message(message.text)
       .execute();
 
-    // let res = { count: 1,
-    //     list:
-    //      [ { id: '5B1947D03738302CE6FC531E',
-    //          points: 0.033,
-    //          number: '15005550002',
-    //          date_sent: 1528383439,
-    //          submitted_number: '+15005550002',
-    //          status: 'QUEUE',
-    //          error: null,
-    //          idx: null } ] }
+    /*
+      response example:
+     { count: 1,
+        list:
+         [ { id: '5B1947D03738302CE6FC531E',
+             points: 0.033,
+             number: '15005550002',
+             date_sent: 1528383439,
+             submitted_number: '+15005550002',
+             status: 'QUEUE',
+             error: null,
+             idx: null } ] }
+    */
 
-    console.log(res)
     if (!res || !Array.isArray(res.list) || !res.list.length) {
       throw Error('Incorrect response')
     }

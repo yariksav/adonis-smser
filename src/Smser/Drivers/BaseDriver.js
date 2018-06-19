@@ -16,6 +16,8 @@
  * @class BaseDriver
  * @constructor
  */
+const debug = require('debug')('adonis:smser')
+
 class BaseDriver {
 
   /**
@@ -44,6 +46,7 @@ class BaseDriver {
    */
 
   async send (message) {
+    debug(this.constructor.name + '.send', message)
     if (!message) {
       throw new Error('Message object was not sended')
     }

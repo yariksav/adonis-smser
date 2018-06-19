@@ -12,8 +12,9 @@
 const GE = require('@adonisjs/generic-exceptions')
 const SmsManager = require('./Manager')
 const Avtivator = require('./Activator')
-const proxyMethods = ['send']
 const activatorProxyMethods = ['sendActivation', 'resendActivation', 'verifyActivation']
+const debug = require('debug')('adonis:smser')
+const C_PHONE_RULE = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/
 
 const proxyHandler = {
   get (target, name) {
@@ -29,6 +30,7 @@ const proxyHandler = {
      * the actual methods
      */
     if (target._fake && target._fake[name] !== undefined) {
+      debug('fake.' + name)
       return typeof (target._fake[name]) === 'function' ? target._fake[name].bind(target._fake) : target._fake[name]
     }
 
@@ -122,6 +124,7 @@ class Smser {
    * @return {void}
    */
   fake () {
+    debug('fake.enable')
     this._fake = new (require('./Fake'))(this._config)
   }
 
@@ -133,15 +136,29 @@ class Smser {
    * @return {void}
    */
   restore () {
+    debug('fake.disable')
     this._fake = null
   }
-}
 
-proxyMethods.forEach((method) => {
-  Smser.prototype[method] = function (...params) {
-    return this.connection()[method](...params)
+  /**
+   * Send email
+   *
+   * @method send
+   * 
+   * @param  {String}   text
+   * @param  {String}   phone
+   *
+   * @return {Object}
+   */
+  send (text, phone) {
+    phone = '+' + phone.match(/\d/g).join('')
+    if (!C_PHONE_RULE.test(phone)) {
+      throw new GE.LogicalException('Incorrect phone number ' + phone, 401, 'E_INCORRECT_PHONE')
+    }
+    debug('Smser.send', {text, phone})
+    return this.connection().send(text, phone)
   }
-})
+}
 
 activatorProxyMethods.forEach((method) => {
   Smser.prototype[method] = function (...params) {

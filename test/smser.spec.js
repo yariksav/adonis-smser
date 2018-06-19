@@ -12,10 +12,7 @@
 const test = require('japa')
 const { Config } = require('@adonisjs/sink')
 const Smser = require('../src/Smser')
-const { twilio: TwilioDriver } = require('../src/Smser/Drivers')
-function sleep (ms = 0) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+const { memory: MemoryDriver } = require('../src/Smser/Drivers')
 
 test.group('Smser', () => {
   test('throw exception when unable to find sms connection', (assert) => {
@@ -27,60 +24,56 @@ test.group('Smser', () => {
 
   test('throw exception connection config is missing', (assert) => {
     const config = new Config()
-    config.set('smser.connection', 'twilio')
+    config.set('smser.connection', 'memory')
     const smser = new Smser(config)
     const fn = () => smser.connection()
-    assert.throw(fn, 'E_MISSING_CONFIG: twilio is not defined inside config/smser.js file')
+    assert.throw(fn, 'E_MISSING_CONFIG: memory is not defined inside config/smser.js file')
   })
 
   test('throw exception when driver is not defined on connection', (assert) => {
     const config = new Config()
-    config.set('smser.connection', 'twilio')
-    config.set('smser.twilio', {
+    config.set('smser.connection', 'memory')
+    config.set('smser.memory', {
       username: ''
     })
     const smser = new Smser(config)
     const fn = () => smser.connection()
-    assert.throw(fn, 'E_MISSING_CONFIG: twilio.driver is not defined inside config/smser.js file')
+    assert.throw(fn, 'E_MISSING_CONFIG: memory.driver is not defined inside config/smser.js file')
   })
 
-  test('get twilio driver instance', (assert) => {
+  test('get memory driver instance', (assert) => {
     const config = new Config()
-    config.set('smser.connection', 'twilio')
-    config.set('smser.twilio', {
-      driver: 'twilio',
-      accountSid: process.env.TWILIO_SID,
-      authToken: process.env.TWILIO_SECRET
+    config.set('smser.connection', 'memory')
+    config.set('smser.memory', {
+      driver: 'memory'
     })
     const smser = new Smser(config)
-    const twilio = smser.connection('twilio')
-    assert.instanceOf(twilio._driverInstance, TwilioDriver)
+    const driver = smser.connection('memory')
+    assert.instanceOf(driver._driverInstance, MemoryDriver)
   })
 
   test('return the cache instance if exists', (assert) => {
     const config = new Config()
-    config.set('smser.connection', 'twilio')
-    config.set('smser.twilio', {
-      driver: 'twilio',
-      accountSid: process.env.TWILIO_SID,
-      authToken: process.env.TWILIO_SECRET
+    config.set('smser.connection', 'memory')
+    config.set('smser.memory', {
+      driver: 'memory'
     })
     const smser = new Smser(config)
-    const twilio = smser.connection('twilio')
-    const twilio1 = smser.connection('twilio')
-    assert.deepEqual(twilio, twilio1)
+    const memory = smser.connection('memory')
+    const memory2 = smser.connection('memory')
+    assert.deepEqual(memory, memory2)
   })
 
-  test('proxy sender methods', (assert) => {
+  test('proxy sender methods', async (assert) => {
     const config = new Config()
-    config.set('smser.connection', 'twilio')
-    config.set('smser.twilio', {
-      driver: 'twilio',
-      accountSid: process.env.TWILIO_SID,
-      authToken: process.env.TWILIO_SECRET
+    config.set('smser.connection', 'memory')
+    config.set('smser.memory', {
+      driver: 'memory'
     })
     const smser = new Smser(config)
     assert.isFunction(smser.send)
+    let res = await smser.send('test text', '1(123)4231234')
+    assert.deepEqual(res.message, { text: 'test text', to: '+11234231234' })
   })
 
   let smser
@@ -102,7 +95,7 @@ test.group('Smser', () => {
     assert.isFunction(smser.verifyActivation)
 
     smser.fake()
-    const response = await smser.sendActivation('Your verification code is {0}', '380', '501111111')
+    const response = await smser.sendActivation('Your verification code is {0}', '380501111111')
     recentSms = smser.pullRecent()
     smser.restore()
 
@@ -118,7 +111,6 @@ test.group('Smser', () => {
   })
 
   test('check resend activation code', async (assert) => {
-    // await sleep(5000)
     smser.fake()
     const response = await smser.resendActivation(token)
     let sms = smser.pullRecent()
@@ -144,6 +136,7 @@ test.group('Smser', () => {
   test('check verification activation code with correct code', async (assert) => {
     let res = await smser.verifyActivation(token, verificationCode)
     assert.isObject(res)
+    assert.equal(res.phone, '+380501111111')
   })
 
   test('check try limit', async (assert) => {
@@ -156,8 +149,9 @@ test.group('Smser', () => {
       codeSize: 6,
       tryLimit: 2
     })
+
     let smser = new Smser(config)
-    let {token} = await smser.sendActivation('Your verification code is {0}', '380', '501111111')
+    let {token} = await smser.sendActivation('Your verification code is {0}', '380501111111')
     let res = await smser.verifyActivation(token, 'xxx')
     assert.isFalse(res)
     res = await smser.verifyActivation(token, 'xxx')
@@ -181,7 +175,7 @@ test.group('Smser', () => {
       resendLimit: 1
     })
     let smser = new Smser(config)
-    let {token} = await smser.sendActivation('Your verification code is {0}', '380', '501111111')
+    let {token} = await smser.sendActivation('Your verification code is {0}', '38(050)1111111')
     let res = await smser.resendActivation(token)
     try {
       res = await smser.resendActivation(token)

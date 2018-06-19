@@ -13,10 +13,20 @@ module.exports = {
   |
   */
   connection: Env.get('SMSER_CONNECTION', 'twilio'),
-
+  /*
+  |--------------------------------------------------------------------------
+  | Activator
+  |--------------------------------------------------------------------------
+  |
+  | Here we define configuration for activator phone numbers
+  |
+  */
   activation: {
-    codeSize: 6
-  }
+    codeSize: 6,
+    tryLimit: 2,
+    resendLimit: 1,
+    timeout: 120
+  },
   /*
   |--------------------------------------------------------------------------
   | Twilio

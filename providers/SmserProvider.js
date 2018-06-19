@@ -44,6 +44,20 @@ class SmserProvider extends ServiceProvider {
     this.app.manager('Adonis/Addons/Smser', require('../src/Smser/Manager'))
   }
 
+    /**
+   * Register authinit middleware under `Adonis/Middleware/AuthInit`
+   * namespace.
+   *
+   * @method _registerAuthInitMiddleware
+   *
+   * @return {void}
+   */
+  _registeeSmserMiddleware () {
+    this.app.bind('Adonis/Middleware/Smser', (app) => {
+      const Smser = require('../src/Smser/Middleware')
+      return new Smser(app.use('Adonis/Src/Config'), app.use('Adonis/Addons/Smser'))
+    })
+  }
   /**
    * Register bindings
    *
@@ -54,6 +68,7 @@ class SmserProvider extends ServiceProvider {
   register () {
     this._registerSmser()
     this._registerSmserManager()
+    this._registeeSmserMiddleware()
   }
 }
 

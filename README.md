@@ -18,6 +18,19 @@ This repo contains following providers.
 
 [Read documentation](https://github.com/yariksav/adonis-smser/blob/master/instructions.md)
 
+
+## Setup
+
+The package must be installed by using `adonis` command.
+
+```bash
+> adonis install adonis-smser
+```
+
+You can use directly `npm` or `yarn` but the instructions (`instructions.js` and `instructions.md`) will not be displayed and ran.
+
+> :warning: This package requires `@adonisjs/bodyparser` to be installed.
+
 ## Node/OS Target
 
 This repo/branch is supposed to run fine on all major OS platforms and targets `Node.js >=7.0`
@@ -78,15 +91,7 @@ test.failing('2 + 2 is always 4, but add method returns 6', (assert) => {
 Now since the `add` method has a bug, it will return `6` instead of `4`. But the build will pass.
 
 [appveyor-image]: https://img.shields.io/appveyor/ci/yariksav/adonis-smser/master.svg?style=flat-square
-
 [appveyor-url]: https://ci.appveyor.com/project/yariksav/adonis-smser
 
 [npm-image]: https://img.shields.io/npm/v/adonis-smser.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/adonis-smser
-
-[travis-image]: https://img.shields.io/travis/yariksav/adonis-smser/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/yariksav/adonis-smser
-
-[coveralls-image]: https://img.shields.io/coveralls/yariksav/adonis-smser/develop.svg?style=flat-square
-
-[coveralls-url]: https://coveralls.io/github/yariksav/adonis-smser
