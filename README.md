@@ -4,7 +4,8 @@ This repo is a AdonisJs provider to send sms using one of the available drivers,
 
 
 [![NPM Version][npm-image]][npm-url]
-[![Appveyor][appveyor-image]][appveyor-url]
+[![Appveyor][appveyor-image]][appveyor-url]s
+[![Coveralls][coveralls-image]][coveralls-url]
 
 <img src="https://cdn4.iconfinder.com/data/icons/chat-icons-3-1/512/smss.png" width="200px" align="right" hspace="30px" vspace="140px">
 
@@ -93,3 +94,6 @@ Now since the `add` method has a bug, it will return `6` instead of `4`. But the
 
 [npm-image]: https://img.shields.io/npm/v/adonis-smser.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/adonis-smser
+s
+[coveralls-image]: https://img.shields.io/coveralls/yariksav/adonis-smser/develop.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/yariksav/adonis-smser

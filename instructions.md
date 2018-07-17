@@ -85,6 +85,44 @@ to verify activation code
 await Smser.verifyActivation(token, code)
 ```
 
+## Registering middleware
+
+It's sipmle to use activation middleware
+```js
+const namedMiddleware = {
+  smsActivation: 'Adonis/Middleware/Smser',
+}
+```
+then you can use it in your routes:
+```js
+  Route.post('profile/phone', 'PhofileController.phone').middleware([ 'smsActivation']) 
+```
+
+After first post
+```js
+{
+  phone: '140123456789',
+  ... //other params
+}
+```
+ to 'profile/phone' route middleware will send sms with verification code automaticaly and return `smser_token` param
+After this frontend env has to send to same route params below:
+```js
+{
+  phone: '140123456789',
+  smser_token: 'yyyy',
+  smser_code: '000',
+  .... //other params
+}
+```
+For resend sms you have to send smser_token without smser_code
+```js
+{
+  phone: '140123456789',
+  smser_token: 'yyyy'
+  .... //other params
+}
+```
 
 ## Configuration and Environment variables
 

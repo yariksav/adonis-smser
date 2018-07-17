@@ -10,9 +10,11 @@ class SmserMiddleware {
     this.message = Config.get('smser.activation.message', 'Activation code: {0}')
   }
 
-  async handle ({ request, response }, next) {
+  async handle ({ request, response }, next, keys) {
+    let key = (keys && keys.length && keys[0]) || 'phone'
     let res
-    let { smser_code, phone, smser_token } = request.all()
+    let { smser_code, smser_token } = request.all()
+    const phone = request.input(key)
     // if sent phone number
     if (!smser_token && phone) {
       res = await this.Smser.sendActivation(this.message, phone)
@@ -26,12 +28,14 @@ class SmserMiddleware {
     }
 
     // verify activation
-     else if (smser_token && phone && smser_code) {
+    else if (smser_token && phone && smser_code) {
       await this.Smser.verifyActivation(smser_token, smser_code)
-      await next()
-    } else {
-      return response.status(403).send({message: 'Invalid phone verification params', code: 'E_INVALID_PARAMS'})
-    }
+      //await next()
+    } 
+    //else {
+    //  return response.status(403).send({message: 'Invalid phone verification params', code: 'E_INVALID_PARAMS'})
+    //}
+    await next()
   }
 }
 
