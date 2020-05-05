@@ -10,7 +10,7 @@
 */
 
 const GE = require('@adonisjs/generic-exceptions')
-const uuidv1 = require('uuid/v1')
+const uuidv1 = require('uuid').v1
 const debug = require('debug')('adonis:smser')
 
 /**
@@ -59,8 +59,8 @@ class Activator {
    * ```
    */
   async sendActivation (text, phone) {
-    debug('sendActivation', {text, phone})
     const code = this.generator(this._codeSize)
+    debug('sendActivation', { text, phone, code })
     const token = uuidv1()
     if (typeof text === 'function') {
       text = text(code)
@@ -81,7 +81,8 @@ class Activator {
     await this._smser.send(text, obj.phone)
     await this._nodeCache.set(token, obj)
     return {
-      token: token
+      token,
+      code
     }
   }
 
@@ -100,7 +101,7 @@ class Activator {
    * ```
    */
   async resendActivation (token) {
-    debug('resendActivation', {token})
+    debug('resendActivation', { token })
     const obj = await this._nodeCache.get(token)
     if (!obj) {
       throw new GE.LogicalException('Token not found', 400, 'E_INVALID_TOKEN')

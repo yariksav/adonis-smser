@@ -10,7 +10,7 @@
 */
 
 const BaseDriver = require('./BaseDriver')
-const uuidv1 = require('uuid/v1')
+const uuidv1 = require('uuid').v1
 /**
  * Memory driver is used to get the message back as
  * an object over sending it to a real user.
